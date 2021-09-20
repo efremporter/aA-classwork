@@ -2,6 +2,7 @@ class PolyTreeNode
   attr_reader :parent, :value
   attr_accessor :children
 
+
   def initialize(value)
     @parent = nil
     @children = []
@@ -39,6 +40,19 @@ class PolyTreeNode
     end
     nil
   end
+
+  def bfs(target)
+    queue = [self]
+    until queue.empty?
+        x = queue.shift
+        return x if x.value == target
+        x.children.each do |child|
+            queue << child
+        end
+    end
+    nil
+  end
+
 end
 
 # node1 = PolyTreeNode.new(1)
