@@ -9,12 +9,25 @@ class PolyTreeNode
 
   def parent=(new_parent)
     if !parent.nil?
-      
+        # parent.children =  parent.children.reject {|child| child == self}
     end
     if !new_parent.nil? && !new_parent.children.include?(self) 
       new_parent.children << self 
     end
     @parent = new_parent
+  end
+
+  def add_child(child)
+    self.children << child
+  end
+
+  def remove_child(child)
+    self.children = self.children.reject {|x| x == child}
+  end
+
+  def dfs(target)
+    return value if value == target
+    self.children
   end
 end
 
