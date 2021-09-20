@@ -1,5 +1,6 @@
 class PolyTreeNode
-  attr_reader :parent, :children, :value
+  attr_reader :parent, :value
+  attr_accessor :children
 
   def initialize(value)
     @parent = nil
@@ -9,7 +10,7 @@ class PolyTreeNode
 
   def parent=(new_parent)
     if !parent.nil?
-        # parent.children =  parent.children.reject {|child| child == self}
+        parent.children.reject! {|child| child == self}
     end
     if !new_parent.nil? && !new_parent.children.include?(self) 
       new_parent.children << self 
@@ -19,15 +20,24 @@ class PolyTreeNode
 
   def add_child(child)
     self.children << child
+    child.parent = self
   end
 
   def remove_child(child)
+    if child.parent == nil
+      raise "This is the root node"
+    else
+      child.parent = nil
+    end
     self.children = self.children.reject {|x| x == child}
   end
 
   def dfs(target)
-    return value if value == target
-    self.children
+    return self if value == target
+    self.children.each do |child|
+      child.dfs(target) 
+    end
+    nil
   end
 end
 
