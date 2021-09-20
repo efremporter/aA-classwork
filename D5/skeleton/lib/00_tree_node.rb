@@ -36,7 +36,8 @@ class PolyTreeNode
   def dfs(target)
     return self if value == target
     self.children.each do |child|
-      child.dfs(target) 
+      result = child.dfs(target) 
+      return result if !result.nil?
     end
     nil
   end
@@ -47,7 +48,7 @@ class PolyTreeNode
         x = queue.shift
         return x if x.value == target
         x.children.each do |child|
-            queue << child
+          queue << child
         end
     end
     nil
