@@ -1,4 +1,5 @@
 require_relative "poly_node_tree.rb"
+require "byebug"
 class KnightPathFinder
 
   attr_reader :root_node, :directions
@@ -9,23 +10,15 @@ class KnightPathFinder
   end
 
   def self.valid_moves(pos)
+    @considered_positions = []
     i = 0
-    possible_x = [-2, -1, 1, 2]
-    possible_y = [-2, -1, 1, 2]
-   
-    possible_x.each_with_index do |x, index1|
-      possible_y.each_with_index do |y, index2|
-        if index2 >= index1 
-         if (x + pos[0] <= 8 && x + pos[0] >= 0) && (y + pos[1] <= 8 && y + pos[1] >= 0)
-            directions << [x + pos[0], y + pos[1]]
-         end
-        end
-      end
+    possible_positions = [[1, 2], [-1, 2], [1, -2], [-1, -2], [2, 1], [-2, 1], [2, -1], [-2, -1]]
+    possible_positions.each do |possible_pos|
+      if (pos[0] + possible_pos[0] < 8 && pos[0] + possible_pos[0] >= 0) && (pos[1] + possible_pos[1] < 8 && pos[1] + possible_pos[1] >= 0)
+        @considered_positions << [possible_pos[0] + pos[0], possible_pos[1] + pos[1]]
+      end  
     end
-    
-
+    @considered_positions
   end
 
 end
-
-# [[1, 2], [-1, 2], [1, -2], [-1, -2], [2, 1], [-2, 1], [2, -1], [-2, -1]]
