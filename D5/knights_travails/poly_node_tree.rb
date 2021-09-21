@@ -1,13 +1,13 @@
 class PolyTreeNode
-  attr_reader :parent, :value
+  attr_reader :parent, :position
   attr_accessor :children
 
 
-  def initialize(pos)
+  def initialize(position)
     @parent = nil
     @children = []
     @moves = []
-    @pos = pos
+    @position = position
   end
 
   def parent=(new_parent)
