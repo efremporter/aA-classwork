@@ -1,6 +1,14 @@
 class Piece
   
-  def initialize
+  attr_reader :board, :color, :pos
+  def initialize(color, board, pos)
     @board = board
+    @color = color
+    @pos = pos
   end
+
+
+  # def empty?
+  #   return true if @board[pos] == 
+  # end
 end
