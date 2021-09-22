@@ -1,7 +1,6 @@
 class Piece 
   
   attr_reader :board, :color, :pos
-  attr_writer :pos
 
   def initialize(color, board, pos)
     @board = board
@@ -10,10 +9,12 @@ class Piece
   end
 
 
-  def empty?
-    return true if board[pos] == "Nullpiece"
+  def empty?(pos)
+    return true if board[pos].symbol == " "
     false
   end
+
+  def legal_move?
 
   def pos=(val)
     x, y = pos

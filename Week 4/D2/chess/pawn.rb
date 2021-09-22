@@ -1,5 +1,5 @@
 require_relative "piece.rb"
-
+attr_reader :symbol
 class Pawn < Piece
 
   def initialize(color, board, pos) 
@@ -48,9 +48,32 @@ class Pawn < Piece
       end
     end
   end
+  
+  def forward_steps 
+    if symbol == "black"
+      x, y = self.pos
+      x_move = x + 1
+      y_move = y + 0
+      if valid_move?([x_move, y_move])
+        self.pos = [x_move, y_move]
+        return true
+      end
+    end
+  end
 
   
   #forward_steps: check, can we move forward + 1? i.e. is anything in our way? not, we can move there. 
+  # - Return an array of all possible positions it can move to from it's starting position
+  # - Loop through move_dirs, 
 
-  #side_attacks: check if there are opponent pieces in the diagonals [1,1] or [1, -1]. If so, allow pawn to take it. 
+  #Move_dirs
+   # - Move dirs returns all of the possible differences it can move, without accounting for start_position
+  #side_attacks: check if there are opponent pieces in the diagonals [1,1] or [1, -1]. If so, allow pawn to take it.
+  
+  #Effectively move the pawn from point a to point b
+  # - Need to check all of the possible moves for the pawn from point a
+  # - Need to check if point b is on the board
+  # - Need to check if point b is occupied by another piece
+  #   - Need to check whether it's an enemy piece or a friendly 
+  # - 
 end

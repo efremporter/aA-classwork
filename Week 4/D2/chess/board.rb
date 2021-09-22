@@ -65,13 +65,13 @@ class Board
         return @grid[x][y] 
     end
     
-    def move_piece(start_pos, end_pos)
-        if end_pos.valid_pos?
-            self.start_pos = end_pos
-        else
-            raise "Invalid Move"
-        end
-    end
+    # def move_piece(start_pos, end_pos)
+    #     if end_pos.valid_pos?
+    #         self.start_pos = end_pos
+    #     else
+    #         raise "Invalid Move"
+    #     end
+    # end
 
     def []=(pos, val)
         x, y = pos
@@ -80,13 +80,13 @@ class Board
         #grid[position[0]][position[1]] = value
     end
 
-    def valid_pos?(pos)
-      if pos.nil?
-        return true
-      else
-        return false
-      end
-    end
+    # def on_the_board?(pos)
+    #   if pos.nil?
+    #     return true
+    #   else
+    #     return false
+    #   end
+    # end
 
     def add_piece(piece, pos)
       self[pos] = piece
