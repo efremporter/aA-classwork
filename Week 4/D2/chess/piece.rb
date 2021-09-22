@@ -8,7 +8,12 @@ class Piece
   end
 
 
-  # def empty?
-  #   return true if @board[pos] == 
-  # end
+  def empty?
+    return true if board[pos] == nil
+    false
+  end
+
+  def pos=(val)
+    
+  end
 end
