@@ -1,7 +1,8 @@
 Pseudo code for Chess:
 
 BOARD:
-1. populate the board in the board class.
+1. populate the board in the board class with placeholders. CHECK
+- Populate board with actual instances of pieces
 2. Pieces need to be aware of where they are on the board and vis versa.
     i.e. figure out a way to get the pieces and board to communicate. 
     This could be via the pos method on the board.
