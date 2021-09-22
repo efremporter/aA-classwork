@@ -14,7 +14,11 @@ class Piece
     false
   end
 
-  def legal_move?
+  def legal_move?(pos)
+    if all_valid_moves.include?(pos)
+      
+    end
+  end
 
   def pos=(val)
     x, y = pos
@@ -24,5 +28,5 @@ class Piece
   # def move_into_check?(end_pos)
   #   #need to know if piece has checked the king with the end_pos.
   # end
-  
+
 end
