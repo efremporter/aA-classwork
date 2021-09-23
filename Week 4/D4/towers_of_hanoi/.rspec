@@ -1,2 +1,4 @@
-type --format documentation
-type --color
+ --format documentation
+ --color
+ --no-fail-fast
+
