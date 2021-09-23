@@ -8,6 +8,10 @@ class Piece
     @pos = pos
   end
 
+  def [](pos)
+    x, y = pos
+    board[x][y]
+  end
 
   def empty?(pos)
     return true if board[pos].symbol == " "
@@ -15,9 +19,7 @@ class Piece
   end
 
   def legal_move?(pos)
-    if all_valid_moves.include?(pos)
-      
-    end
+    self.all_possible_moves(self.pos).include?(pos)
   end
 
   def pos=(val)

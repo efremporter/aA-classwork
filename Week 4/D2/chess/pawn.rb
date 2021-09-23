@@ -1,5 +1,4 @@
 require_relative "piece.rb"
-attr_reader :symbol
 class Pawn < Piece
 
   def initialize(color, board, pos) 
@@ -15,10 +14,10 @@ class Pawn < Piece
     end
   end
 
-  def all_possible_moves(pos)
+  def all_possible_moves(start_pos)
     counter = 0
     moves = []
-    if color == "black" 
+    if self.color == "black" 
       if counter < 1
         counter += 1
         moves = [[2,0],[1,0], [1,1],[1,-1]]
@@ -33,24 +32,33 @@ class Pawn < Piece
         moves = [[-2,0],[-1,0], [-1,-1],[-1,1]]
       else
         moves = [[-1,0], [-1,-1],[-1,1]]
+      end
     end
 
     valid_moves = []
     moves.each do |potential_move|
-      if (pos[0] + potential_move[0]).between?(0,7) && (pos[1] + potential_move[1]).between?(0,7)
+      if (start_pos[0] + potential_move[0]).between?(0,7) && (start_pos[1] + potential_move[1]).between?(0,7)
         if potential_move[1] == 0
-            if [pos[0] + potential_move[0],pos[1] + potential_move[1]].empty?
-              valid_moves << [pos[0] + potential_move[0],pos[1] + potential_move[1]]
+            if self.empty?([start_pos[0] + potential_move[0],start_pos[1] + potential_move[1]])
+              valid_moves << [start_pos[0] + potential_move[0],start_pos[1] + potential_move[1]]
             end
         else
-          if [pos[0] + potential_move[0],pos[1] + potential_move[1]].color != self.color
-            valid_moves << [pos[0] + potential_move[0],pos[1] + potential_move[1]]
+          if self.board[start_pos[0] + potential_move[0],start_pos[1] + potential_move[1]].is_a?(NullPiece)
+            valid_moves << [start_pos[0] + potential_move[0],start_pos[1] + potential_move[1]]
           end
         end
       end
     end
 
     valid_moves
+  end
+
+  def legal_move?(desired_pos)
+    if all_possible_moves(pos).include?(desired_pos)
+
+    else
+
+    end
   end
   
   #forward_steps: check, can we move forward + 1? i.e. is anything in our way? not, we can move there. 
