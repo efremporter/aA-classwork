@@ -10,11 +10,24 @@ describe Game do
     end
 
     it "sets @grid to empty 2D array" do
-      expect(game).to eq(array)
+      expect(game.grid).to eq(array)
     end
 
     it "sets game_over as false" do
-      expect(game_over).to be(false)
+      expect(game.game_over).to be(false)
+    end
+  end
+
+  describe "#move" do
+
+    it "adds a piece to the top of a stack" do 
+      start_pos = 0
+      end_pos = 2
+      expect(game.move(start_pos, end_pos)).to eq([[5,4,3,2],[],[1]])
     end
   end
 end
+
+#valid_moves 
+#pop
+#push
