@@ -7,4 +7,17 @@ class Game
     (1..n).each { |num| @grid[0].unshift(num) }
     @game_over = false
   end
+
+  def move(start, end_pos)
+    var = @grid[start].pop
+    @grid[end_pos].push(var)
+    @grid
+  end
+
+  def valid_move?(start, end_pos)
+    return false if grid[start].last < grid[end_pos].last
+    true
+  end
+
 end
+

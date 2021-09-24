@@ -26,8 +26,18 @@ describe Game do
       expect(game.move(start_pos, end_pos)).to eq([[5,4,3,2],[],[1]])
     end
   end
-end
+
+  describe "#valid_move?" do
+    it "the destination stack's top element must be larger than the element you're moving" do
+      subject(:arr) { [[5,4,3,2],[],[1]]}
+      start_pos = 0
+      end_pos = 2
+      game.move(0,2)
+      expect { game.valid_move?(start_pos, end_pos) }.to eq(false)
+
+
+    end
+  end
+end 
 
 #valid_moves 
-#pop
-#push
