@@ -39,5 +39,15 @@ describe "#my_transpose" do
     
 
   end
+end
 
+describe "#stock_picker" do
+  subject(:arr1) { Array.new([6, 10, 400, 11, 5, 111]) }
+  it "takes in a 1D array" do
+    expect { stock_picker(arr1) }.to_not raise_error
+  end
+
+  it "returns the indices of stock prices at greatest value for buying and selling" do
+    expect(stock_picker(arr1)).to eq([0, 2])
+  end
 end

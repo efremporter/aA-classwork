@@ -28,3 +28,22 @@ def my_transpose(two_d_array)
   arr
 end
 
+def stock_picker(arr)
+  temp_low = arr[0]
+  temp_low_index = 0
+  temp_high = 0
+  temp_high_index = 0
+  arr.each_with_index do |price, i|
+    if price > temp_high
+      temp_high_index = i
+      temp_high = price 
+    end
+    if price < temp_low && i < temp_high_index
+      temp_low = price
+      temp_low_index = i
+    end
+  end
+  return [temp_low_index, temp_high_index]
+end
+
+#[6, 10, 400, 11, 5, 111]
