@@ -1,7 +1,7 @@
 class Game
   attr_reader :grid
   attr_accessor :game_over
-  
+
   def initialize(n)
     @grid = Array.new(3) { [] }
     (1..n).each { |num| @grid[0].unshift(num) }
@@ -15,8 +15,12 @@ class Game
   end
 
   def valid_move?(start, end_pos)
-    return false if grid[start].last < grid[end_pos].last
-    true
+    grid[start].last < grid[end_pos].last
+  end
+
+  def run
+    g = Game.new()
+    
   end
 
 end
