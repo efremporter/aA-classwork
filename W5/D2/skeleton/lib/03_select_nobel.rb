@@ -91,12 +91,18 @@ def presidential_prizes
     FROM
       nobels
     WHERE
-      winner = 'Theodore Roosevelt' OR 'Woodrow Wilson' OR 'Jimmy Carter'
+      winner = 'Theodore Roosevelt' OR winner = 'Woodrow Wilson' OR winner = 'Jimmy Carter'
   SQL
 end
 
 def nobel_johns
   # Show the winners with first name John
   execute(<<-SQL)
+  SELECT
+    winner
+  FROM 
+    nobels 
+  WHERE
+    winner LIKE 'John%'
   SQL
 end
