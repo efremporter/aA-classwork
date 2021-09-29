@@ -19,8 +19,8 @@ class User
     User.new(data.first) 
   end
 
-  def self.find_by_name(fname, lname)
-    data = QuestionsDatabase.instance.execute("SELECT * FROM users WHERE fname = #{fname} AND lname = #{lname}")
+  def self.find_by_name(first_name, last_name)
+    data = QuestionsDatabase.instance.execute("SELECT * FROM users WHERE fname = '#{first_name}' AND lname = '#{last_name}'") 
     User.new(data.first) 
   end
 
@@ -32,6 +32,10 @@ class User
 
   def authored_questions
     Question.find_by_author_id(self.user_id)
+  end
+
+  def authored_replies
+    Reply.find_by_user_id(self.user_id)
   end
 
 end
@@ -52,6 +56,16 @@ class Question
     @title = options['title']
     @body = options['body']
     @author_id = options['author_id']
+  end
+
+  def author
+    data = QuestionsDatabase.instance.execute("SELECT * FROM users WHERE id = #{author_id}") 
+    User.new(data.first)
+  end
+
+  def replies
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE id = #{author_id}") 
+    User.new(data.first)
   end
 
 end
@@ -92,6 +106,16 @@ class Reply
     @parent_reply = options['parent_reply']
     @subject_question = options['subject_question']
     @replying_user = options['replying_user']
+  end
+
+  def author
+    data = QuestionsDatabase.instance.execute("SELECT * FROM users WHERE id = #{replying_user}") 
+    User.new(data.first)
+  end
+
+  def question
+    data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE id = #{subject_question}") 
+    Question.new(data.first)
   end
 
 end
