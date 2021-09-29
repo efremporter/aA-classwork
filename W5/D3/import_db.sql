@@ -41,7 +41,7 @@ CREATE TABLE replies (
 CREATE TABLE question_likes (
   users_id INTEGER NOT NULL,
   questions_id INTEGER NOT NULL,
-  FOREIGN KEY(users_id) REFERENCES users_id(id),
+  FOREIGN KEY(users_id) REFERENCES users(id),
   FOREIGN KEY(questions_id) REFERENCES questions(id)
 );
 
@@ -54,20 +54,21 @@ VALUES
 INSERT INTO
   questions (title, body, author_id)
 VALUES
-  ('ruby programming', 'how do we code using ruby?', SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'),
-  ('sql programming', 'what companies utilize SQL?', SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese');
+  ('ruby programming', 'how do we code using ruby?', (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter')),
+  ('sql programming', 'what companies utilize SQL?', (SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese'));
 
--- -- INSERT INTO
--- --   question_follows (user_id, question_id)
--- -- VALUES
--- --   (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter', SELECT id FROM questions WHERE author_id = (SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese'))
+INSERT INTO
+  question_follows (user_id, question_id)
+VALUES
+  ((SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'), (SELECT id FROM questions WHERE author_id = (SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese')));
 
--- -- INSERT INTO
--- --   replies (body, subject_question, replying_user)
--- -- VALUES
--- --   ('I think Apple is one.', SELECT id FROM questions WHERE title = 'sql programming', SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter')
+INSERT INTO
+  replies (body, subject_question, replying_user)
+VALUES
+  ('I think Apple is one.', (SELECT id FROM questions WHERE title = 'sql programming'), (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'));
 
--- -- INSERT INTO
--- --   question_likes (users_id, questions_id)
--- -- VALUES
--- --   (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter', SELECT id FROM questions WHERE title = 'sql programming')
+INSERT INTO
+  question_likes (users_id, questions_id)
+VALUES
+  ((SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'), (SELECT id FROM questions WHERE title = 'sql programming'));
+
