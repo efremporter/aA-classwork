@@ -12,8 +12,15 @@ class QuestionsDatabase < SQLite3::Database
 end
 
 class User
-
-  def self.find_by_id
-    data = QuestionsDatabase.instance.execute(SELECT * FROM users WHERE id = )
+  
+  def self.find_by_id(desired_id)
+    data = QuestionsDatabase.instance.execute(SELECT * FROM users WHERE id = desired_id) #takes in data from Users db as array of rows
+    User.new(data.first) #maps array of rows to array of User instances
   end
+
+  def initialize(options) #takes in a hash
+    @fname = options['fname']
+    @lname = options['lname']
+  end
+
 end
