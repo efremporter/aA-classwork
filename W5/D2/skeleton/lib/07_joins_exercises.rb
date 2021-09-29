@@ -40,6 +40,13 @@ end
 def ford_films
   # List the films in which 'Harrison Ford' has appeared.
   execute(<<-SQL)
+    SELECT
+      movies.title
+    FROM
+      castings
+    castings JOIN movies ON movie_id = movies.id JOIN actors ON actor_id = actors.id
+    WHERE
+      name = 'Harrison Ford'
   SQL
 end
 
@@ -48,12 +55,20 @@ def ford_supporting_films
   # role. [Note: the ord field of casting gives the position of the actor. If
   # ord=1 then this actor is in the starring role]
   execute(<<-SQL)
+    SELECT
+      movies.title
+    FROM
+      castings
+    castings JOIN movies ON movie_id = movies.id JOIN actors ON actor_id = actors.id
+    WHERE
+      name = 'Harrison Ford' AND ord != 1
   SQL
 end
 
 def films_and_stars_from_sixty_two
   # List the title and leading star of every 1962 film.
   execute(<<-SQL)
+    
   SQL
 end
 
