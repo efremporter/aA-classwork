@@ -39,6 +39,7 @@ CREATE TABLE replies (
 );
 
 CREATE TABLE question_likes (
+  id INTEGER PRIMARY KEY,
   users_id INTEGER NOT NULL,
   questions_id INTEGER NOT NULL,
   FOREIGN KEY(users_id) REFERENCES users(id),
