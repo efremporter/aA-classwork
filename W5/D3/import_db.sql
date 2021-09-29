@@ -1,3 +1,8 @@
+DROP TABLE users;
+DROP TABLE questions;
+DROP TABLE question_follows;
+DROP TABLE replies;
+DROP TABLE question_likes;
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE users (
@@ -41,23 +46,28 @@ CREATE TABLE question_likes (
 );
 
 INSERT INTO
-  users (first_name, last_name)
+  users (fname, lname)
 VALUES
-  (Matt, Lese),
-  (Efrem, Porter);
+  ('Matt', 'Lese'),
+  ('Efrem', 'Porter');
 
 INSERT INTO
   questions (title, body, author_id)
 VALUES
-  ('ruby programming', 'how do we code using ruby?', SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter')
-  ('sql programming', 'what companies utilize SQL?', SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese')
+  ('ruby programming', 'how do we code using ruby?', SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'),
+  ('sql programming', 'what companies utilize SQL?', SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese');
 
-INSERT INTO
-  question_follows (user_id, question_id)
-VALUES
-  (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter', SELECT id FROM questions WHERE author_id = (SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese'))
+-- -- INSERT INTO
+-- --   question_follows (user_id, question_id)
+-- -- VALUES
+-- --   (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter', SELECT id FROM questions WHERE author_id = (SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese'))
 
-INSERT INTO
-  replies (body, subject_question, replying_user)
-VALUES
-  ('I think Apple is one.', SELECT id FROM questions WHERE)
+-- -- INSERT INTO
+-- --   replies (body, subject_question, replying_user)
+-- -- VALUES
+-- --   ('I think Apple is one.', SELECT id FROM questions WHERE title = 'sql programming', SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter')
+
+-- -- INSERT INTO
+-- --   question_likes (users_id, questions_id)
+-- -- VALUES
+-- --   (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter', SELECT id FROM questions WHERE title = 'sql programming')
