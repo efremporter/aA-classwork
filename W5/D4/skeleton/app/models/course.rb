@@ -19,12 +19,12 @@ class Course < ApplicationRecord
     through: :enrollments,
     source: :user
 
-  belongs_to :parent_course,
+  belongs_to :next_course,
     primary_key: :prereq_id,
     foreign_key: :id,
     class_name: :Course
 
-  has_many :prerequisites,
+  has_one :prereq,
     primary_key: :prereq_id,
     foreign_key: :id,
     class_name: :Course
