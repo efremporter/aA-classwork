@@ -20,8 +20,12 @@ class Course < ApplicationRecord
     source: :user
 
   belongs_to :parent_course,
-    
+    primary_key: :prereq_id,
+    foreign_key: :id,
+    class_name: :Course
 
   has_many :prerequisites,
-
+    primary_key: :prereq_id,
+    foreign_key: :id,
+    class_name: :Course
 end
