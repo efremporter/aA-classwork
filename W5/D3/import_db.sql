@@ -61,12 +61,18 @@ VALUES
 INSERT INTO
   question_follows (user_id, question_id)
 VALUES
-  ((SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'), (SELECT id FROM questions WHERE author_id = (SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese')));
+  ((SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'), (SELECT id FROM questions WHERE author_id = (SELECT id FROM users WHERE fname = 'Matt' AND lname = 'Lese'))),
+  (1, 2);
 
 INSERT INTO
   replies (body, subject_question, replying_user)
 VALUES
   ('I think Apple is one.', (SELECT id FROM questions WHERE title = 'sql programming'), (SELECT id FROM users WHERE fname = 'Efrem' AND lname = 'Porter'));
+ 
+INSERT INTO
+  replies (body, parent_reply, subject_question, replying_user)
+VALUES
+  ('Who knows', (SELECT id FROM replies WHERE body = 'I think Apple is one.'), 2, 1);
 
 INSERT INTO
   question_likes (users_id, questions_id)

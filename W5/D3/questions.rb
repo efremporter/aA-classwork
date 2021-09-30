@@ -41,7 +41,7 @@ class User
 end
 
 class Question
-  attr_accessor :title, :body, :author_id
+  attr_accessor :title, :body, :author_id, :id
   def self.find_by_id(desired_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE id = #{desired_id}") 
     Question.new(data.first) 
@@ -52,7 +52,8 @@ class Question
     Question.new(data.first) 
   end
 
-  def initialize(options) 
+  def initialize(options)
+    @id = options['id'] 
     @title = options['title']
     @body = options['body']
     @author_id = options['author_id']
@@ -72,9 +73,34 @@ end
 
 class QuestionFollow
   attr_accessor :user_id, :question_id
+
   def self.find_by_id(desired_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM question_follows WHERE id = #{desired_id}") 
     QuestionFollow.new(data.first) 
+  end
+
+  def self.followers_for_question_id(question_id)
+    query = <<-SQL
+    SELECT users.id, users.fname, users.lname 
+    FROM question_follows 
+    JOIN questions ON question_follows.question_id = questions.id
+    JOIN users ON question_follows.user_id = users.id
+    WHERE questions.id = #{question_id}
+    SQL
+    data = QuestionsDatabase.instance.execute(query)
+    data.map { |user_row| User.new(user_row) }
+  end
+
+  def self.followed_questions_for_user_id(user_id)
+    query = <<-SQL
+    SELECT questions.id, questions.title, questions.body, questions.author_id 
+    FROM question_follows 
+    JOIN questions ON question_follows.question_id = questions.id
+    JOIN users ON question_follows.user_id = users.id
+    WHERE users.id = #{user_id}
+    SQL
+    data = QuestionsDatabase.instance.execute(query)
+    data.map { |question| Question.new(question) }
   end
 
   def initialize(options) #takes in a hash
@@ -85,7 +111,8 @@ class QuestionFollow
 end
 
 class Reply
-  attr_accessor :body, :parent_reply, :subject_question, :replying_user
+  attr_accessor :body, :parent_reply_id, :subject_question, :replying_user, :id
+
   def self.find_by_id(desired_id)
     data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE id = #{desired_id}")
     Reply.new(data.first) 
@@ -102,8 +129,9 @@ class Reply
   end
 
   def initialize(options) 
+    @id = options['id']
     @body = options['body']
-    @parent_reply = options['parent_reply']
+    @parent_reply_id = options['parent_reply']
     @subject_question = options['subject_question']
     @replying_user = options['replying_user']
   end
@@ -116,6 +144,16 @@ class Reply
   def question
     data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE id = #{subject_question}") 
     Question.new(data.first)
+  end
+
+  def parent_reply
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE id = #{parent_reply_id}") 
+    Reply.new(data.first)
+  end
+
+  def child_replies
+    data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE parent_reply = #{id}") 
+    data.map { |child_reply| Reply.new(child_reply) }
   end
 
 end
