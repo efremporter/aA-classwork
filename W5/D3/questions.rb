@@ -38,6 +38,10 @@ class User
     Reply.find_by_user_id(self.user_id)
   end
 
+  def followed_questions
+    QuestionFollow.followed_questions_for_user_id(self.user_id)
+  end
+
 end
 
 class Question
@@ -69,6 +73,10 @@ class Question
     User.new(data.first)
   end
 
+  def followers
+    QuestionFollow.followers_for_question_id(self.id)
+  end
+
 end
 
 class QuestionFollow
@@ -98,6 +106,20 @@ class QuestionFollow
     JOIN questions ON question_follows.question_id = questions.id
     JOIN users ON question_follows.user_id = users.id
     WHERE users.id = #{user_id}
+    SQL
+    data = QuestionsDatabase.instance.execute(query)
+    data.map { |question| Question.new(question) }
+  end
+
+  def self.most_followed_questions(n)
+    query = <<-SQL
+    SELECT questions.id, questions.title, questions.body, questions.author_id 
+    FROM question_follows
+    JOIN questions ON question_follows.question_id = questions.id
+    JOIN users ON question_follows.user_id = users.id
+    GROUP BY questions.id
+    ORDER BY COUNT(users.id)
+    LIMIT #{n}
     SQL
     data = QuestionsDatabase.instance.execute(query)
     data.map { |question| Question.new(question) }
