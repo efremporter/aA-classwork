@@ -1,5 +1,5 @@
 class Artwork < ApplicationRecord
-  validates :artist_id, uniqueness {scope: :title} 
+  validates :artist_id, uniqueness: {scope: :title} 
 
   belongs_to :artist,
     primary_key: :id,
