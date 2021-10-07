@@ -11,4 +11,5 @@ class ArtworkShare < ApplicationRecord
     primary_key: :id,
     foreign_key: :viewer_id,
     class_name: :User 
+    
 end 

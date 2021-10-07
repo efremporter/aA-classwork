@@ -1,9 +1,16 @@
 class ArtworksController < ApplicationController
-def index 
+  def index #user_id 
     # render plain: "I'm in the index action!" 
-    artworks = Artwork.all 
+    # if params[:user_id]
+
+    # end 
+
+    # user = User.find(params[:artist_id])
+    # user.
+
+    artworks = Artwork.all  
     render json: artworks
-  end
+  end 
 
   def show 
     artwork = Artwork.find(params[:id])
