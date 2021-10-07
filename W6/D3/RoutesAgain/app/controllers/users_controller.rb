@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
 
-
   def index 
     # render plain: "I'm in the index action!" 
     users = User.all 
@@ -14,17 +13,20 @@ class UsersController < ApplicationController
   end
   
   def create
-  #   user = User.new(user_params)
+    debugger
+    user = User.new(params.require(:user).permit(:name, :email))
 
-  #   if user
-  #      redirect_to "/users/#{user.id}"
-  #   else
-      
-  #   end
-    render json: params
-  end 
+    if user.save  
+      render json: user
+    else
+      render json: user.errors.full_messages 
+    end 
+  end
 
   def user_params 
-    params.require(:user).permit(:username, :email, :age, :political_affliation)
+    params.require(:user).permit(:name, :email) 
   end 
+
+  
+
 end 
