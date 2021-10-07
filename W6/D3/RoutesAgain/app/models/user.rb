@@ -16,4 +16,9 @@ class User < ApplicationRecord
   has_many :shared_artworks, #
     through: :viewed_art, #grab all the artwork_ids that have been shared to this user instance 
     source: :artwork #grabs all the artworks based on the artwork_id 
+
+  has_many :comments,
+    primary_key: :id,
+    foreign_key: :commenter_id,
+    class_name: :Comment
 end

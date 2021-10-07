@@ -5,10 +5,10 @@ class ArtworksController < ApplicationController
 
     # end 
 
-    # user = User.find(params[:artist_id])
+    user = User.find(params[:user_id])
     # user.
 
-    artworks = Artwork.all  
+    artworks = user.artworks + user.shared_artworks 
     render json: artworks
   end 
 

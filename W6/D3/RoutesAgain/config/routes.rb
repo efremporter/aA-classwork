@@ -17,10 +17,10 @@ Rails.application.routes.draw do
   # patch '/artworks/:id', to: 'artworks#update' 
   # delete '/artworks/:id', to: 'artworks#destroy' 
 
-  resources :artworks 
+  resources :artworks, except: [:index]
 
   resources :users do 
-    resources :artworks, only: [:index, :show]
+    resources :artworks, only: [:index]
   end 
 
   resources :artwork_shares, only: [:create, :destroy] 
