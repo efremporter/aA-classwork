@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   post '/users', to: 'users#create'
   get '/users/:id/edit', to: 'users#edit'
   patch '/users/:id', to: 'users#update' 
-  delete '/users', to: 'users#destroy' 
+  delete '/users/:id', to: 'users#destroy' 
 end
