@@ -8,4 +8,13 @@ Rails.application.routes.draw do
   get '/users/:id/edit', to: 'users#edit'
   patch '/users/:id', to: 'users#update' 
   delete '/users/:id', to: 'users#destroy' 
+
+  get '/artworks', to: 'artworks#index'
+  get '/artworks/:id', to: 'artworks#show'
+  get '/artworks/new', to: 'artworks#new'
+  post '/artworks', to: 'artworks#create'
+  get '/artworks/:id/edit', to: 'artworks#edit'
+  patch '/artworks/:id', to: 'artworks#update' 
+  delete '/artworks/:id', to: 'artworks#destroy' 
+
 end
