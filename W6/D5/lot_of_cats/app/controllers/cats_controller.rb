@@ -1,11 +1,11 @@
 class CatsController < ApplicationController
   def index
-    cats = Cats.all
+    @cats = Cats.all
     render :index 
   end
 
   def show
-    cat = Cat.find(params[:id])
+    @cat = Cat.find(params[:id])
     render :show              #logic if they dont find
   end
 

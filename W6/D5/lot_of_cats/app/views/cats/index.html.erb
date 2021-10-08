@@ -1,2 +1,8 @@
-<h1>Cats#index</h1>
-<p>Find me in app/views/cats/index.html.erb</p>
+<h1>All Cats</h1>
+<br/>
+<ul>
+  <% @cats.each do |cat| %>
+    <li> <%= cat.name%> </li>
+    <li> <%= cat.color%> </li>
+    <li> <%= cat.sex%> </li>
+</ul>
