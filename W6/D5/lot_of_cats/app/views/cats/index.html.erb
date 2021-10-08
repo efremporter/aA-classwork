@@ -2,7 +2,6 @@
 <br/>
 <ul>
   <% @cats.each do |cat| %>
-    <li> <%= cat.name%> </li>
-    <li> <%= cat.color%> </li>
-    <li> <%= cat.sex%> </li>
+    <li><b>Name:</b> <%= cat.name%>, <b>Color:</b> <%= cat.color%>, <b>Sex:</b> <%= cat.sex%> </li>
+  <% end %>
 </ul>

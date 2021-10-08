@@ -6,20 +6,24 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-cats = Cat.create([
+all_cats = Cat.create([
   { name: 'Bella', 
     color: 'Black', 
-    sex: 'F' },
+    sex: 'F',
+    birth_date: '2020/01/07' },
 
   { name: 'Charlie', 
     color: 'Cinnamon', 
-    sex: 'M' },
+    sex: 'M',
+    birth_date: '2020/12/08' },
 
   { name: 'Lucy', 
     color: 'Blue', 
-    sex: 'F' },
+    sex: 'F', 
+    birth_date: '2020/10/02'},
     
-  { name: 'Leah'z, 
+  { name: 'Leah', 
     color: 'Lavender', 
-    sex: 'F' }
+    sex: 'F',
+    birth_date: '2020/05/01' }
 ])
