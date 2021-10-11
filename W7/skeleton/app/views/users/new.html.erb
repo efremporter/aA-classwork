@@ -1,0 +1,18 @@
+<!-- header
+text box - username
+text box - password
+submit button - sends form -->
+
+<h1>Create An Account</h1>
+<form action="<%= users_url %>" method="get">
+  <label for="user_name">Username</label>
+  <input type="text" name="user[user_name]" value="<%= @user.user_name %>">
+  <br>
+
+  <label for="password">Password</label>
+  <input type="password" name="user[password]">
+  <br>
+
+  <% submit_text = "Create An Account" %>
+  <input type="submit" value="<%= submit_text %>">
+</form>
