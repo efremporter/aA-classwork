@@ -6,8 +6,9 @@ Rails.application.routes.draw do
       post :approve
       post :deny
     end
-  resources :users, only: [:new, :create, :destroy]
   end
+  resources :users, only: [:new, :create, :destroy]
+  resources :session, only: [:new, :create, :destroy]
 
   root to: redirect('/cats')
 end
