@@ -1,0 +1,78 @@
+BCrypt
+Incorporates a salt to prevent has/rainbow table attacks
+Verifies if two hashes were created from the same input without needing to reveal them
+Include the bcrypt gem in Gemfile to use in Ruby
+better_erros gem gives us a nicer error page, full stack trace, source lin in editor
+binding_of_caller gem, used in conjunction with better_errors, gives us a REPL on error page, 
+  allows us to look at local and instance variables
+Sign up a user: pass params (username, password) through a form, create
+  an instance of a user with these params, try to save the user in the database,
+    (user needs password_digest and session_token)
+  Login, redirect, show errors, etc
+Create a BCrypt object 0 Bcrypt::Password.create(password)
+
+
+before_validation :ensure_session_token
+validates :username, :email, :session_token, presence: true, uniqueness: true
+validates :password_digest, presence: true
+validates :password, length: {minimum: 6}
+
+def password=(password)
+  self.password_digest = BCrypt::Password.create(password)
+  @password = password
+end
+
+def ensure_session_token
+  self.session_token ||= SecureRandom.urlsafe_base64
+end
+
+Database doesn't know who is logged in
+The logged in status depends on cookies
+The controller modifies our cookies using the session
+A user is logged in if user.session_token == session[:session_token]
+
+!!current_user --> converts a truthy value to true, and a falsey value to false (using !!)
+
+def logged_in?
+  !!current_user
+end
+
+def logout
+  current_user.reset_session_token!
+  session[:session_token] = nil
+  @current_user = nil
+end
+
+def require_logged_in
+  redirect_to new_session_url unless logged_in?
+end
+
+def require_logged_out
+  redirect_to users_url if logged_in?
+end
+
+UsersController
+before_action :require_logged_in, except: [:new, :create]
+before_action :require_logged_out, only: [:new, :create]
+
+SessionsController
+before_action :require_logged_in, only:[:destroy]
+before_action :require_logged_out, 
+
+TweetsController
+before_action :require_logged_in, only:[:index, :show]
+Why do we not neeed to include password in the schema if it is one of our params?
+
+What is the difference between encryption and hashing?
+
+Why is it important that session_token be unique? Indexed?
+
+Does password_digest need to be unique? Why or why not? Indexed?
+
+Why do we need to add allow nil: true to our password validation?
+
+Why do we call self.save! in reset_session_token!? What would happen if we didn't?
+
+Why do we reset the user's session token in the DB instead of setting it to nil on logout?
+
+Why do we only have one session (single resource)?

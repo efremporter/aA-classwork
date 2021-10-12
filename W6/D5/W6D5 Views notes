@@ -1,0 +1,191 @@
+RESTFUL ROUTE
+/subjects GET index - show alll items
+/subjects/new GET new/subjects POST create - show new form
+/subjects/ POST create - create an item - show edit form for item with :id
+/subjects:id GET show - show item with :id
+/subjects/:id/edit GET edit/subjects/:id show edit form for item with :id
+/subjects/:id PATCH update - update item with :id
+/subjects/:id/delete GET delete show delete form for item with :id
+/subjects/:id DELETE destroy delete item with :id
+
+<anchor tags are automatically a get request>
+
+Controller rendering
+Views - JSON, HTML
+Syntax: render <template>
+Example - render :show
+  - RAILS KNOWS TO LOOK HERE: "/app/views/users/show.html.erb"
+Renders the specified template within application.htm.erb
+  - specifically at yield
+  render :edit
+  render template: "books/edit"
+  render template: "books/edit.html.erb"
+
+  rails routes -c table_name to find all routes and actions
+
+View
+the client-facing potion of rails. 
+within the application.html.erb file, yield is waiting for our controller to try and render something
+
+Partial - A template that we can use for other templates
+  _user.html.erb
+  <%= render "user", user: @user, action: :show %>
+              ^^partial file namee
+
+Embedded Ruby (ERB)
+<% Ruby code here %> - executes Ruby code without a return value (converted to HTML)
+<%= Ruby code here %> - executes Ruby code with a return (converted to HTML, but not shown to user)
+- ERB code is NOT visible to the client/browser
+- Don't try to run puts or print
+- Comment out by also inserting a # immediately after first %
+
+users_url --> a built in RAILS auto generated method, brings us to the index page because 
+user_ul(user) brings me to a specific user
+
+Within the show.html.erb
+- We must use instance variables 
+<ul>
+    <li> 
+        <%= @user.age %>
+    </li>
+    <li>
+        <%= @user.age %>
+    </li>
+    <li>
+        <%= @user.email %>
+    </li>
+</ul>
+
+ERB-VSCODE-SNIPPETS
+Simple Ruby ERB
+
+index.html.erb
+<h1> Here are all of our users!</h1>
+<ul>
+    <% @users.each do |user| %>
+        <li>
+            <ul>
+                <li> 
+                    <%= user.age %>
+                </li>
+                <li>
+                    <%= user.age %>
+                </li>
+                <li>
+                    <%= user.email %>
+                </li>
+            </ul>
+        </li>
+    <% end %>
+</ul>
+
+_user.html.erb
+<% if action == :show %>
+      <a href="<%= users_url %>">
+        User Index
+      </a>
+<% else %>
+<% end %>
+<ul>
+    <li> 
+        <%= user.age %>
+    </li>
+    <li>
+        <%= user.age %>
+    </li>
+    <li>
+        <%= user.email %>
+    </li>
+</ul>
+
+New and Edit routes (GET REQUESTS)
+- siply render templates that contain forms
+
+Form anatomy
+1. action (path/rails helper)
+2. HTTP method (ex: POST)
+3. inputs and labels (optional)
+4. Submit button
+
+Controller Redirecting
+- Ends current request/ response cycle and initialize a second
+- Syntax: redirect_to <Rails URL Helper>
+- For example show page --> redirect_to user_url(@user)
+- Use the prefixes provided to you by rails routes
+
+def new
+  @user = User.new
+  render :new
+end
+
+new.html.erb
+<form action="<%= users_url %>" method="POST">  --> corresponds to what we want to make with this form
+    <label> Username
+        <input type="text" name="user[username]" value="<%= @user.username %>" />
+    </label>
+    <br/>
+    <label> Email
+        <input type="text" name="user[email]" value="<%= @user.email %>" />
+    </label>
+    <br/>
+    <label> Age
+        <input type="text" name="user[age]" value="<%= @user.age %>" />
+    </label>
+    <br/>
+
+    <input type="submit" value="CREATE USER!">
+</form>
+
+def edit
+  @user = User.find(params[:id])
+  render :edit
+end
+
+def update
+  user = User.find(params[:id])
+  if user.update(user_params)
+    redirect_to user_url(user)
+  else
+    render json: user.errors.full_messages, status: 422
+  end
+end
+
+edit.html.erb
+<form action="<%= user_url(@user) %>" method="POST">  --> corresponds to what we want to make with this form
+  <input type="hidden" name="_method" value="PATCH" />    <-- this will overwrite the "method" of the form
+    <label> Username
+        <input type="text" name="user[username]" value="<%= @user.username %>" />
+    </label>
+    <br/>
+    <label> Email
+        <input type="text" name="user[email]" value="<%= @user.email %>" />
+    </label>
+    <br/>
+    <label> Age
+        <input type="text" name="user[age]" value="<%= @user.age %>" />
+    </label>
+    <br/>
+
+    <input type="submit" value="UPDATE USER!">
+</form>
+
+delete
+<form action="<%= user_url(user) %>" method="POST" >
+  <input type="hidden" name="_method" value="DELETE" />
+  <input type="submit" value="Delete User" />
+</form>
+
+Partials
+primary method of refactoring
+example : _form.html.erb
+Syntax: render <Partial Filename>, options_hash
+omit the _ character when inserting the partial's filename
+options hash can contain data to be passed into partial
+<%= render "form", user: @user, action: :new %> <-- form tells us which partial we want to use
+
+<!--<%# if action == :show %> --->
+<!--<%# else %>
+  <a href="<%# cat_url(@cat.id) %>">
+    <%# @cat.name %>
+  </a>  
+<% end %> -->
