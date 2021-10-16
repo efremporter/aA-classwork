@@ -1,0 +1,16 @@
+CSS
+Positions: static, relative, absolute, fixed
+Static - default positioning and flow of elements, not affected by top, bottom,left, right properties
+  things flow around each other, things take up space(no overlap)
+Relative - relative to where it would be, you can decide where to move it using the top, left ,bottom, right
+  properties, physically in the same place as static, visually different, overlaps
+Absolute - doesn't take up physical space on the page, visually it looks like it's there, but
+  it's overlappping other things on page, uses top, left, bottom right
+Fixed - doesn't take up physical space, relative to the viewport, good for navbars
+  for example, you can scoll but the navbar is always on the top of your screen
+  the viewport is the portion of the screen that the user can view
+Sticky - similar to position relative, but when you scroll past it, it will "stick"
+  to the viewport, good for ads
+Dropdowns - Hover effect on an element displays a "dropdown" list of elements
+  elements are merely hidden until the hover effect changes display:none to display:block
+  list of elements appears on top of the rest of the page due to position:absolute

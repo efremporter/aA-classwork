@@ -3,4 +3,6 @@ class User < ApplicationRecord
   validates :password_digest, presence: true
   validates :session_token, presence: true, uniqueness: true
 
+  attr_reader :password
+  
 end

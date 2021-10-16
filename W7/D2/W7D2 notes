@@ -1,0 +1,24 @@
+Flash object is an object that Ruby provides for us.
+Mostly use flash to manage erros we need to display to the user, but it can be used for any one-time message
+Flash lasts through the current and next request/response cycle (use with redirect_to)
+Flash.now lasts through the current request/response cycle only (use with render)
+In the create else clause
+flash.now[:errors] = user.errors.full_messages
+render :new
+In application.html.erb
+if flash[:errors]
+  flash[:errors].each do |error|
+      error
+  end
+end
+CSRF = Cross-Site Request Forgery
+When a request is made to a website other than the one the user is currently one
+Forces user to execute unwanted actions on this other side (e.g. liking a facebook page)
+Get around this by enabling CSRF protection in Rails and adding form_authenticity_token to each form
+Rails enables CSRF protection by default
+add skip_before_action :verify_authenticity_token to application_controller.rb to turn it off
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"
+helper method --> app/helpers/application_helper
+def auth_token 
+    return "<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>.html_safe
+end

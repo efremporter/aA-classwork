@@ -1,0 +1,22 @@
+Capybara (RSpec Testing)
+Add gems
+gem rspec-rails, rails-controller-testing, capybara, shoulda-matchers,
+  factory_bot_rails, faker, launchy
+rails generate rspec:install creates the .rspec, spec/ spec_helper.rb, rails_helper.rb
+factory_bot_rails allows us to create a user by calling a method
+rails-controller-testing gives us helper methods for testing our controllers
+faker allows us to input fake data into database by calling faker method - group test
+guard-rspec ensures that when we make changes to our code, the tests are testing the updated code - group test
+lanchy allows you to open up a browser that shows the current state of your application while you're testing - group test
+shoulda-matchers provides a nicer syntax, write more readable code group test
+
+in rspec helper add 
+  --require spec_helper
+  --color
+  --format documentation
+
+  in application.rb
+    config.generators do |g|
+      g.test_framework :rspec,
+      :fixtures => false,
+      
