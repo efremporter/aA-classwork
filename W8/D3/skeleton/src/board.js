@@ -13,10 +13,10 @@ function _makeGrid () {
   for(let i =0; i<8; i++) {
     grid.push(new Array(8));
   }
-  grid[3][4].push(new Piece("black"));
-  grid[4][3].push(new Piece("black"));
-  grid[3][3].push(new Piece("white"));
-  grid[4][4].push(new Piece("white"));
+  grid[3][4] = (new Piece("black"));
+  grid[4][3] = (new Piece("black"));
+  grid[3][3] = (new Piece("white"));
+  grid[4][4] = (new Piece("white"));
 
   return grid 
 
@@ -40,6 +40,10 @@ Board.DIRS = [
  * Checks if a given position is on the Board.
  */
 Board.prototype.isValidPos = function (pos) {
+  if (pos[0] < 0 || pos[1] < 0 || pos[0] > 7 || pos[1] > 7) {
+    return false;
+  }
+  return true;
 };
 
 /**
@@ -47,6 +51,11 @@ Board.prototype.isValidPos = function (pos) {
  * throwing an Error if the position is invalid.
  */
 Board.prototype.getPiece = function (pos) {
+  if (this.isValidPos(pos)) {
+    return this.grid[pos[0]][pos[1]];
+  } else {
+    throw new Error('Not valid pos!');
+  }
 };
 
 /**
@@ -54,12 +63,25 @@ Board.prototype.getPiece = function (pos) {
  * matches a given color.
  */
 Board.prototype.isMine = function (pos, color) {
+  if (this.getPiece(pos) == undefined) {
+    return undefined;
+  }
+  if (this.grid[pos[0]][pos[1]].color === color) {
+    return true;
+  } else if (this.grid[pos[0]][pos[1]].color !== color) {
+    return false;
+  }
 };
 
 /**
  * Checks if a given position has a piece on it.
  */
 Board.prototype.isOccupied = function (pos) {
+  if (this.getPiece(pos) == undefined) {
+    return false;
+  } else {
+    return true;
+  }
 };
 
 /**
