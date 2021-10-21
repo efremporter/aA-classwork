@@ -211,6 +211,7 @@ describe("Board", function () {
 
     it("returns positions for longer horizontal and vertical cases ", function () {
       //long vertical cases
+      debugger
       expect(JSON.stringify(testBoardLongHorzDiagonal._positionsToFlip([1, 0], "white", [1, 0]))).toEqual(JSON.stringify([[2, 0], [3, 0], [4, 0]]));
       expect(JSON.stringify(testBoardLongHorzDiagonal._positionsToFlip([5, 7], "white", [-1, 0]))).toEqual(JSON.stringify([[4, 7], [3, 7], [2, 7]]));
 

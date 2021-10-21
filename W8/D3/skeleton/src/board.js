@@ -100,19 +100,25 @@ Board.prototype.isOccupied = function (pos) {
 //(x,y)
 //(-1,0)
 Board.prototype._positionsToFlip = function(pos, color, dir, piecesToFlip){
-  //starting position position to move
+  //initialize piecesToFlip if it doesn't exit (first call)
+  //set pos equal nextPosition
+  if (piecesToFlip === undefined) {
+    piecesToFlip = [];
+  }
   if (!this.isValidPos(pos)) {
     return [];
-  }
-  let countMine=0;
-  let countOp = 0;
-  for (let i=0; i<8; i++){
-    for (let j=0; i<8; j++){
-      if (this.board)
+  };
+  let nextPosition = [pos[0] + dir[0], pos[1] + dir[1]]; //(2, 0)
+  if (this.isValidPos(nextPosition)) {
+    let nextPiece = this.getPiece(nextPosition);
+    if (nextPiece === undefined) {
+      return [];
+    } else if (nextPiece.color !== color) {
+        piecesToFlip.push(nextPosition);
+        return this._positionsToFlip(nextPosition, color, dir, piecesToFlip); //nextPos = [2,0], PTF = [[2,0]]
+    } else {
+      return piecesToFlip;
     }
-  }
-  if (countMine === 0 || countOp === 0) {
-    return []
   }
 };
 
