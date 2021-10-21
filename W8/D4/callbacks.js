@@ -35,7 +35,7 @@ class Clock {
 
   _tick() {
 
-    if (this.seconds < 60){
+    if (this.seconds < 59){
       this.seconds += 1;
     } else {
       this.seconds = 0;
@@ -53,4 +53,22 @@ class Clock {
 
     this.printTime();
   }
+}
+
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+function addNumbers(sum,numsLeft, completionCallback) {
+    let sum = 0;
+    if (numsLeft ===0){
+      return sum;
+    } 
+
+  rl.question('Give me a number', answer = > )
+
+}
+
 }
