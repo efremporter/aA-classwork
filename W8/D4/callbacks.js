@@ -61,14 +61,20 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-function addNumbers(sum,numsLeft, completionCallback) {
-    let sum = 0;
+
+function addNumbers(sum,numsLeft,completionCallback) {
     if (numsLeft ===0){
       return sum;
     } 
-
-  rl.question('Give me a number', answer = > )
-
+  
+  rl.question('Give me a number ',function(answer) {
+    sum += parseInt(answer);
+    console.log(`thanks for the number: ${answer}`);
+    rl.close();
+  })
+  
+  // console.log(sum)
+  addNumbers(sum, numsLeft - 1)
 }
 
-}
+addNumbers(1, 4)
