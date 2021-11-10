@@ -1,7 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import configureStore from './store/store';
+import { recieveTodos } from './actions/todo_actions'
 
 document.addEventListener("DOMContentLoaded", () => {
-  let main = getElementById("main");
-  ReactDOM.render(<h1>Todos App</h1>, main)
+  console.log("hello")
+
+  const store = configureStore();
+
+  window.store = store
+  
 })
