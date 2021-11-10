@@ -1,5 +1,5 @@
 import configureStore from './store/store';
-import { recieveTodos } from './actions/todo_actions'
+import { receiveTodos, receiveTodo, removeTodo } from './actions/todo_actions'
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("hello")
@@ -7,5 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const store = configureStore();
 
   window.store = store
-  
+  window.receiveTodos = receiveTodos
+  window.receiveTodo = receiveTodo
+  window.removeTodo = removeTodo
+
 })
