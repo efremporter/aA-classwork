@@ -55,12 +55,6 @@ class TodoForm extends React.Component {
         <label>Body
           <input type="text" onChange={this.updateBody} value={this.state.body}/>
         </label>
-        <label>Done
-          <input name="todo" type="radio" id="true" onChange={this.updateDone} value="true"/>
-          <label for="true">True</label>
-          <input name="todo" type="radio" id="false" onChange={this.updateDone} value="false" checked/>
-          <label for="false">False</label>
-        </label>
         <button>Submit</button>
       </form>
     </div>)
