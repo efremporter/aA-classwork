@@ -31,6 +31,7 @@ const todosReducer = (state = initialState, action) => {
       });
       return emptyState;
     case REMOVE_TODO:
+      console.log("you made it")
       delete nextState[action.todo.id];
       return nextState;
     default:

@@ -62,12 +62,14 @@ describe("Board", function () {
 
     it("should start out empty except for the 4 center pieces", function () {
       testBoard.grid.forEach(function (row, i) {
-        row.forEach(function (spot, j) {
-          if ((i !== 3 && i !== 4) && (j !== 3 && j !== 4)) {
-            expect(spot).toBeUndefined();
+        for (let j = 0; j < 8; j++) {
+          if ((i !== 3 && i !== 4) || (j !== 3 && j !== 4)) {
+            expect(testBoard.grid[i][j]).toBeUndefined();
           }
-        });
-      });
+          else
+            expect(testBoard.grid[i][j]).not.toBeUndefined();
+        }
+      }); 
     });
   });
 
@@ -161,6 +163,15 @@ describe("Board", function () {
       expect(testBoard._positionsToFlip([5, 3], "white", [1, -1]).length).toEqual(0);
     });
 
+    it("returns empty array if no piece of the same color is on the other end", function () {
+      let correspondingColorTestBoard = new Board();
+      correspondingColorTestBoard.grid[0][0] = new Piece("white");
+      correspondingColorTestBoard.grid[0][2] = new Piece("white");
+      correspondingColorTestBoard.grid[0][3] = new Piece("white");
+
+      expect(correspondingColorTestBoard._positionsToFlip([0, 1], "black", [0, -1]).length).toEqual(0);
+      expect(correspondingColorTestBoard._positionsToFlip([0, 1], "black", [0, 1]).length).toEqual(0);
+    });
     
     beforeEach(function () {
       testBoardLongHorzDiagonal = new Board();
@@ -211,7 +222,6 @@ describe("Board", function () {
 
     it("returns positions for longer horizontal and vertical cases ", function () {
       //long vertical cases
-      debugger
       expect(JSON.stringify(testBoardLongHorzDiagonal._positionsToFlip([1, 0], "white", [1, 0]))).toEqual(JSON.stringify([[2, 0], [3, 0], [4, 0]]));
       expect(JSON.stringify(testBoardLongHorzDiagonal._positionsToFlip([5, 7], "white", [-1, 0]))).toEqual(JSON.stringify([[4, 7], [3, 7], [2, 7]]));
 
