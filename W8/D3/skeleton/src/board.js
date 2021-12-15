@@ -9,6 +9,20 @@ if (typeof window === 'undefined'){
  * and two white pieces at [3, 3] and [4, 4]
  */
 function _makeGrid () {
+  let grid = new Array();
+  for (let i = 0; i < 8; i++) {
+    grid.push([]);
+  }
+  grid.forEach( (row) => {
+    for (let i = 0; i < 8; i++) {
+      row.push(undefined);
+    }
+  })
+  grid[3][4] = new Piece("black");
+  grid[4][3] = new Piece("black");
+  grid[3][3] = new Piece("white");
+  grid[4][4] = new Piece("white");
+  return grid;
 }
 
 /**
@@ -28,6 +42,8 @@ Board.DIRS = [
  * Checks if a given position is on the Board.
  */
 Board.prototype.isValidPos = function (pos) {
+  if (pos[0] > 7 || pos[1] > 7 || pos[0] < 0 || pos[1] < 0) return false;
+  return true;
 };
 
 /**
@@ -35,6 +51,12 @@ Board.prototype.isValidPos = function (pos) {
  * throwing an Error if the position is invalid.
  */
 Board.prototype.getPiece = function (pos) {
+  if (this.isValidPos(pos) && this.isOccupied(pos)) {
+    return this.grid[pos[0]][pos[1]];
+  } else if (this.isValidPos(pos) && !this.isOccupied(pos)) {
+    return undefined;
+  }
+  throw new Error('Not valid pos!');
 };
 
 /**
@@ -42,12 +64,22 @@ Board.prototype.getPiece = function (pos) {
  * matches a given color.
  */
 Board.prototype.isMine = function (pos, color) {
+  if (this.isValidPos(pos) && this.isOccupied(pos)) {
+    if (this.getPiece(pos).color === color) return true;
+  }
+  return false;
 };
 
 /**
  * Checks if a given position has a piece on it.
  */
 Board.prototype.isOccupied = function (pos) {
+  if (this.isValidPos(pos)) {
+    if (this.grid[pos[0]][pos[1]] !== undefined) {
+      return true;
+    }
+    return false;
+  }
 };
 
 /**
@@ -64,6 +96,7 @@ Board.prototype.isOccupied = function (pos) {
  * Returns empty array if no pieces of the opposite color are found.
  */
 Board.prototype._positionsToFlip = function(pos, color, dir, piecesToFlip){
+  //if we put a piece down, which position will we need to flip
 };
 
 /**
@@ -72,6 +105,10 @@ Board.prototype._positionsToFlip = function(pos, color, dir, piecesToFlip){
  * color being flipped.
  */
 Board.prototype.validMove = function (pos, color) {
+  if (!this.isOccupied(pos)) {
+    
+  }
+
 };
 
 /**
