@@ -97,6 +97,23 @@ Board.prototype.isOccupied = function (pos) {
  */
 Board.prototype._positionsToFlip = function(pos, color, dir, piecesToFlip){
   //if we put a piece down, which position will we need to flip
+  // if (pos[0] > 7 || pos[1] > 7 || pos[0] < 0 || pos[1] < 0) return [];
+  console.log("HELLO")
+  if (!this.isOccupied([pos[0], pos[1]])) return [];
+  console.log("HELLO")
+  if (this.grid[pos[0]][pos[1]].color !== color) return [];
+  console.log("HELLO")
+  if (piecesToFlip) {
+    piecesToFlip.push(pos);
+  } else {
+    piecesToFlip = [];
+  }
+  let x = pos[0] + dir[0];
+  let y = pos[1] + dir[1];
+  let newPos = [x, y]
+  // console.log(piecesToFlip)
+  return piecesToFlip.concat(this._positionsToFlip(newPos, color, dir, piecesToFlip))
+
 };
 
 /**
@@ -105,11 +122,35 @@ Board.prototype._positionsToFlip = function(pos, color, dir, piecesToFlip){
  * color being flipped.
  */
 Board.prototype.validMove = function (pos, color) {
-  if (!this.isOccupied(pos)) {
+  if (this.isOccupied(pos)) return false;
+  
+  Board.DIRS.forEach( (direction) => {
+    let x = pos[0] + direction[0];
+    let y = pos[1] + direction[1];
+    console.log(pos[1] + direction[1]);
     
-  }
-
+    if (this.isOccupied([x, y])) {
+      if (this.grid[x][y].color !== color) {
+        console.log(this.grid[x][y].color);
+        console.log(color);
+        return true;
+        console.log("HELLO")
+      }
+    }
+    
+  })
+  return false;
 };
+
+// it('should return true for a valid move', function () {
+//   expect(testBoard.validMove([2, 3], "black")).toEqual(true);
+// });
+
+// Board.DIRS = [
+//   [ 0,  1], [ 1,  1], [ 1,  0],
+//   [ 1, -1], [ 0, -1], [-1, -1],
+//   [-1,  0], [-1,  1]
+// ];
 
 /**
  * Adds a new piece of the given color to the given position, flipping the
