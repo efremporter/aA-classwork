@@ -38,8 +38,31 @@ class Clock {
     // 2. Call printTime.
   }
 }
+// const clock1 = new Clock();
 
 
 
-const clock1 = new Clock();
-// clock.printTime();
+const { read } = require('fs');
+const readline = require('readline');
+
+const reader = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+function addNumbers(sum, numsLeft, completionCallback) {
+  if (numsLeft > 0) {
+    reader.question("Pick a number ", (response) => {
+      response = parseInt(response);
+      sum += response;
+      console.log(`Sum: ${sum}`)
+      addNumbers(sum, numsLeft - 1, completionCallback);
+    });
+  } else {
+    reader.close();
+    completionCallback(sum);
+  }
+}
+
+// addNumbers(0, 3, sum => console.log(`Total Sum: ${sum}`));
+
