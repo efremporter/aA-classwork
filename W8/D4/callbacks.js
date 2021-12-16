@@ -1,80 +1,45 @@
 class Clock {
-  constructor(hours, minutes, seconds) {
-    this.hours = hours;
-    this.minutes = minutes;
-    this.seconds = seconds;
+  constructor() {
+    this.date = new Date();
+    this.hours = this.date.getHours();
+    this.minutes = this.date.getMinutes();
+    this.seconds = this.date.getSeconds();
     this.printTime();
-
-    let context = this;
-    setInterval(this._tick.bind(context), 1000);  
+    setInterval(this._tick.bind(this), 1000)
+    // this._tick() = 1
+    // 1. Create a Date object.
+    // 2. Store the hours, minutes, and seconds.
+    // 3. Call printTime.
+    // 4. Schedule the tick at 1 second intervals.
   }
+
   printTime() {
-  let h;
-  let s;
-  let m;
-
-      if (this.hours < 10) {
-        h = `0${this.hours}:`
-      } else {
-        h = `${this.hours}:`
-      }
-
-      if (this.minutes < 10) {
-        m = `0${this.minutes}:`
-      } else {
-        m = `${this.minutes}:`
-      }
-
-      if (this.seconds < 10) {
-        s = `0${this.seconds}`
-      } else {
-        s = `${this.seconds}`
-      }
-      console.log(h + m + s);
+    let hours = this.hours;
+    let minutes = this.minutes;
+    let seconds =  this.seconds;
+    if (this.hours < 10) hours = "0" + String(this.hours);
+    if (this.minutes < 10) minutes = "0" + String(this.minutes);
+    if (this.seconds < 10) seconds = "0" + String(this.seconds);
+    console.log(`${hours}:${minutes}:${seconds}`)
   }
 
   _tick() {
-
-    if (this.seconds < 59){
-      this.seconds += 1;
-    } else {
+    this.seconds += 1;
+    if (this.seconds === 60) {
+      this.minutes += 1;
       this.seconds = 0;
-      this.minutes += 1
     }
-
     if (this.minutes === 60) {
-      this.minutes = 0;
       this.hours += 1;
+      this.minutes = 0;
     }
-
-    if (this.hours === 24) {
-      this.hours = 0
-    }
-
     this.printTime();
+    // 1. Increment the time by one second.
+    // 2. Call printTime.
   }
 }
 
-const readline = require("readline");
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 
-function addNumbers(sum,numsLeft,completionCallback) {
-    if (numsLeft ===0){
-      return sum;
-    } 
-  
-  rl.question('Give me a number ',function(answer) {
-    sum += parseInt(answer);
-    console.log(`thanks for the number: ${answer}`);
-    rl.close();
-  })
-  
-  // console.log(sum)
-  addNumbers(sum, numsLeft - 1)
-}
-
-addNumbers(1, 4)
+const clock1 = new Clock();
+// clock.printTime();
