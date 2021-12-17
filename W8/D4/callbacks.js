@@ -64,5 +64,68 @@ function addNumbers(sum, numsLeft, completionCallback) {
   }
 }
 
+
+
+
+
+
+
 // addNumbers(0, 3, sum => console.log(`Total Sum: ${sum}`));
+function absurdBubbleSort(arr, sortCompletionCallback){
+  outerBubbleSortLoop(true)
+  function outerBubbleSortLoop(madeAnySwaps) {
+    if (madeAnySwaps) {
+      innerBubbleSortLoop(arr, 0, false, outerBubbleSortLoop)
+    } else {
+      sortCompletionCallback(arr)
+    }
+  }
+}
+
+function askIfGreaterThan(num1,num2,callback) {
+
+  reader.question( `is ${num1} greater than ${num2}? `,(answer) => {
+    if (answer === "yes") {
+      callback(true)
+    }else if (answer === "no") {
+      callback(false)
+      // reader.close()
+    }else{
+        console.log("Please say yes or no!")
+      askIfGreaterThan(num1, num2, callback)
+    }
+
+  })
+  
+}
+
+function innerBubbleSortLoop(arr, i, madeAnySwaps=false, outerBubbleSortLoop) {
+    if (i < arr.length - 1) {
+      askIfGreaterThan(arr[i], arr[i + 1], (isGreaterThan) => {
+        if (isGreaterThan) {
+          [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+     
+
+          console.log(arr)
+          madeAnySwaps = true 
+          innerBubbleSortLoop(arr, i + 1, true, outerBubbleSortLoop)
+        } else {
+          console.log("outer")
+          console.log(madeAnySwaps)
+          outerBubbleSortLoop(madeAnySwaps)
+          
+        }
+      }) 
+    } else {
+      outerBubbleSortLoop(madeAnySwaps)
+      
+    }
+
+  
+}
+
+absurdBubbleSort([6,5,7,3,2,5,4], function(arr) {
+  console.log(arr)
+  reader.close()
+})
 
