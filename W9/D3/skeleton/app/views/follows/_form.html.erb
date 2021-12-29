@@ -1,4 +1,4 @@
-<% if current_user.follows?(user) %>
+<!-- <% if current_user.follows?(user) %>
   <form action="<%= user_follow_url(user) %>" method="post">
     <input
         type="hidden"
@@ -16,3 +16,13 @@
     <input type="submit" value="Follow">
   </form>
 <% end %>
+-->
+<% if current_user.follows?(user) %>
+  <% status = "followed" %>
+<% else  %>
+  <% status = "unfollowed" %>
+<% end %>
+<% id = current_user.id %>
+<button class="follow-toggle" data-initial-follow-state="<%= status %>" data-user-id="<%= id %>"></button>
+
+<!-- li.setAttribute("data-pos", variable) -->
