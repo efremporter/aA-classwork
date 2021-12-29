@@ -1,0 +1,29 @@
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  width: 300px;
+  height: auto;
+
+}
+
+li {
+  float: left;
+  width: 90px;
+  height: 90px;
+  border: 5px solid black;
+  background: grey;
+  list-style-type: none;
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+li:hover {
+  background-color: rgb(255, 252, 88);
+}
