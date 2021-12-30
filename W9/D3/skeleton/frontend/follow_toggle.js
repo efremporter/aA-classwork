@@ -1,10 +1,11 @@
-const { default: moduleTransformations } = require("@babel/preset-env/lib/module-transformations");
+// const { default: moduleTransformations } = require("@babel/preset-env/lib/module-transformations");
 
 class FollowToggle{
     constructor(button){
+        console.log(button)
         this.el = $(button);
-        this.followState = this.el.data(initial-follow-state);
-        this.userId = this.el.data(user-id);
+        this.followState = this.el.data("initial-follow-state");
+        this.userId = this.el.data("user-id");
         this.render();
         document.addEventListener("click", this.handleClick.bind(this))
     }
@@ -21,7 +22,7 @@ class FollowToggle{
         event.preventDefault();
         if (this.followState === "unfollowed") {
             $.ajax({
-                url: `users/${this.userId}/follow`,
+                url: `/users/${this.userId}/follow`,
                 method: 'POST',
                 dataType: 'JSON'
                 // data: { user: { user_id: `${this.userId}`}}, //this isn't neccessary now, because we are passing the userId in the url, based the rails routes. The data represents the body
@@ -33,8 +34,8 @@ class FollowToggle{
             })
         } else {
             $.ajax({
-                url: `users/${this.userId}/follow`,
-                method: 'DELETE',
+                url: `/users/${this.userId}/follow`,
+                method: 'DESTROY',
                 dataType: 'JSON'
             }).then( () => {
                 this.followState = "unfollowed";

@@ -5,15 +5,16 @@
 /*!***********************************!*\
   !*** ./frontend/follow_toggle.js ***!
   \***********************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((module) => {
 
-const { default: moduleTransformations } = __webpack_require__(/*! @babel/preset-env/lib/module-transformations */ "../../../../../../node_modules/@babel/preset-env/lib/module-transformations.js");
+// const { default: moduleTransformations } = require("@babel/preset-env/lib/module-transformations");
 
 class FollowToggle{
     constructor(button){
+        console.log(button)
         this.el = $(button);
-        this.followState = this.el.data(initial-follow-state);
-        this.userId = this.el.data(user-id);
+        this.followState = this.el.data("initial-follow-state");
+        this.userId = this.el.data("user-id");
         this.render();
         document.addEventListener("click", this.handleClick.bind(this))
     }
@@ -30,7 +31,7 @@ class FollowToggle{
         event.preventDefault();
         if (this.followState === "unfollowed") {
             $.ajax({
-                url: `users/${this.userId}/follow`,
+                url: `/users/${this.userId}/follow`,
                 method: 'POST',
                 dataType: 'JSON'
                 // data: { user: { user_id: `${this.userId}`}}, //this isn't neccessary now, because we are passing the userId in the url, based the rails routes. The data represents the body
@@ -42,8 +43,8 @@ class FollowToggle{
             })
         } else {
             $.ajax({
-                url: `users/${this.userId}/follow`,
-                method: 'DELETE',
+                url: `/users/${this.userId}/follow`,
+                method: 'DESTROY',
                 dataType: 'JSON'
             }).then( () => {
                 this.followState = "unfollowed";
@@ -57,31 +58,6 @@ module.exports = FollowToggle;
 
 //when would you need to use more ".then"s?
 
-
-/***/ }),
-
-/***/ "../../../../../../node_modules/@babel/preset-env/lib/module-transformations.js":
-/*!**************************************************************************************!*\
-  !*** ../../../../../../node_modules/@babel/preset-env/lib/module-transformations.js ***!
-  \**************************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _default = {
-  auto: "transform-modules-commonjs",
-  amd: "transform-modules-amd",
-  commonjs: "transform-modules-commonjs",
-  cjs: "transform-modules-commonjs",
-  systemjs: "transform-modules-systemjs",
-  umd: "transform-modules-umd"
-};
-exports["default"] = _default;
 
 /***/ })
 
@@ -122,7 +98,7 @@ const FollowToggle = __webpack_require__(/*! ./follow_toggle */ "./frontend/foll
 
 $(() => {
   let buttons = $("button.follow-toggle");
-  buttons.each( (index, button) => new FollowToggle(button))
+  buttons.each( (index) => new FollowToggle(buttons[index]))
 })
 })();
 
